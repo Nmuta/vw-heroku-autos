@@ -30,8 +30,9 @@ public class AutosService {
 
     }
 
-    public AutosList getAutos(String colorOrMake) {
-        return null;
+    public AutosList getAutosByColorOrMake(String color, String make) {
+        List<Automobile> automobiles = autosRepository.findByColorOrMakeContains(color, make);
+        return  !automobiles.isEmpty() ? new AutosList(automobiles) : null;
     }
 
     public Automobile addAuto(Automobile auto) {

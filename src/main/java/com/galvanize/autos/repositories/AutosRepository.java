@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface AutosRepository extends JpaRepository<Automobile, Long> {
     List<Automobile> findByColorContainsAndMakeContains(String color, String make);
+    List<Automobile> findByColorOrMakeContains(String color, String make);
 }

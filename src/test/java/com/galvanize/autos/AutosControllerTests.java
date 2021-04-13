@@ -88,7 +88,7 @@ public class AutosControllerTests {
         for (int i = 0; i < 5; i++) {
             automobiles.add(new Automobile(1967 + i, "Ford", "Mustang", "AABB" + i));
         }
-        when(autosService.getAutos(anyString())).thenReturn(new AutosList(automobiles));
+        when(autosService.getAutos(anyString(), isNull())).thenReturn(new AutosList(automobiles));
         mockMvc.perform(get("/api/autos?color=RED"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.automobiles", hasSize(5)));
@@ -101,7 +101,7 @@ public class AutosControllerTests {
         for (int i = 0; i < 5; i++) {
             automobiles.add(new Automobile(1967 + i, "Ford", "Mustang", "AABB" + i));
         }
-        when(autosService.getAutos(anyString())).thenReturn(new AutosList(automobiles));
+        when(autosService.getAutos(isNull(), anyString())).thenReturn(new AutosList(automobiles));
         mockMvc.perform(get("/api/autos?make=Ford"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.automobiles", hasSize(5)));
