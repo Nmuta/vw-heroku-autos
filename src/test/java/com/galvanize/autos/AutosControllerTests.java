@@ -127,7 +127,8 @@ public class AutosControllerTests {
                 .andExpect(status().isBadRequest());
 
     }
-
+    //GET a specific auto
+    // GET: /api/autos/{vin} returns the Auto that matches the vin
     @Test
     void getAuto_withVin_returnsAuto() throws Exception {
         Automobile automobile = new Automobile(1967, "Ford", "Mustang", "AABBCC");
@@ -137,11 +138,13 @@ public class AutosControllerTests {
                 .andExpect(jsonPath("vin").value(automobile.getVin()));
     }
 
-
-//GET a specific auto
-    // GET: /api/autos/{vin} returns the Auto that matches the vin
     // GET: /api/autos/{vin} returns no auto found (204)
-
+    @Test
+    void getAuto_withVin_none_returnsNoContent() throws Exception {
+        when(autosService.getAutoByVin(anyString())).thenReturn(null);
+        mockMvc.perform(get("/api/autos/AB"))
+                .andExpect(status().isNoContent());
+    }
 
 //PATCH
     //PATCH: /api/autos/{vin} returns the patched auto

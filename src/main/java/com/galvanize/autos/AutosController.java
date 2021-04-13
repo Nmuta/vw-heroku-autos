@@ -37,8 +37,11 @@ public class AutosController {
     }
 
     @GetMapping("/api/autos/{vin}")
-    public Automobile getAutoByVin(@PathVariable String vin) {
-        return autosService.getAutoByVin(vin);
+    public ResponseEntity<Automobile> getAutoByVin(@PathVariable String vin) {
+        Automobile automobile = autosService.getAutoByVin(vin);
+        return automobile == null ? ResponseEntity.noContent().build() :
+                ResponseEntity.ok(automobile);
+
     }
 
 
