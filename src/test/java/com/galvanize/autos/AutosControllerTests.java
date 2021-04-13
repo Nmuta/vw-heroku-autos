@@ -15,8 +15,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -148,6 +147,18 @@ public class AutosControllerTests {
 
 //PATCH
     //PATCH: /api/autos/{vin} returns the patched auto
+@Test
+void updateAuto_withObject_returnsAuto() throws Exception {
+    Automobile automobile = new Automobile(1967, "Ford", "Mustang", "AABBCC");
+    when(autosService.updateAuto(anyString(), anyString(), anyString())).thenReturn(automobile);
+    mockMvc.perform(patch("/api/autos/" + automobile.getVin())
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("{\"color\":\"RED\",\"owner\":\"Hector\"}"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("color").value("RED"))
+            .andExpect(jsonPath("owner").value("Hector"));
+}
+
     //PATCH: /api/autos/{vin} returns no auto found (204)
     //PATCH: /api/autos/{vin} returns error message (400) due to bad request
 
