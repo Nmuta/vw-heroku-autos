@@ -34,11 +34,11 @@ public class AutosControllerTests {
     //GET
     // GET: /api/autos returns list of all autos in db
     @Test
-    void getAuto_noParams_exists_returnsAutosList() throws Exception{
+    void getAuto_noParams_exists_returnsAutosList() throws Exception {
         // Arrange
         List<Automobile> automobiles = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            automobiles.add(new Automobile(1967+i, "Ford", "Mustang", "AABB" + i));
+            automobiles.add(new Automobile(1967 + i, "Ford", "Mustang", "AABB" + i));
         }
         when(autosService.getAutos()).thenReturn(new AutosList(automobiles));
         // Act
@@ -66,7 +66,7 @@ public class AutosControllerTests {
     void getAutos_searchParams_exists_returnsAutosList() throws Exception {
         List<Automobile> automobiles = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            automobiles.add(new Automobile(1967+i, "Ford", "Mustang", "AABB" + i));
+            automobiles.add(new Automobile(1967 + i, "Ford", "Mustang", "AABB" + i));
         }
         when(autosService.getAutos(anyString(), anyString())).thenReturn(new AutosList(automobiles));
         mockMvc.perform(get("/api/autos?color=RED&make=Ford"))
@@ -74,12 +74,13 @@ public class AutosControllerTests {
                 .andExpect(jsonPath("$.automobiles", hasSize(5)));
 
     }
+
     // GET: /api/autos?color=red returns list of all blue autos in db
     @Test
     void getAutos_searchParamColor_exists_returnsAutosList() throws Exception {
         List<Automobile> automobiles = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            automobiles.add(new Automobile(1967+i, "Ford", "Mustang", "AABB" + i));
+            automobiles.add(new Automobile(1967 + i, "Ford", "Mustang", "AABB" + i));
         }
         when(autosService.getAutos(anyString())).thenReturn(new AutosList(automobiles));
         mockMvc.perform(get("/api/autos?color=RED"))
@@ -92,7 +93,7 @@ public class AutosControllerTests {
     void getAutos_searchParamMake_exists_returnsAutosList() throws Exception {
         List<Automobile> automobiles = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            automobiles.add(new Automobile(1967+i, "Ford", "Mustang", "AABB" + i));
+            automobiles.add(new Automobile(1967 + i, "Ford", "Mustang", "AABB" + i));
         }
         when(autosService.getAutos(anyString())).thenReturn(new AutosList(automobiles));
         mockMvc.perform(get("/api/autos?make=Ford"))
@@ -126,13 +127,14 @@ public class AutosControllerTests {
                 .andExpect(status().isBadRequest());
 
     }
+
     //GET a specific auto
     // GET: /api/autos/{vin} returns the Auto that matches the vin
     @Test
     void getAuto_withVin_returnsAuto() throws Exception {
         Automobile automobile = new Automobile(1967, "Ford", "Mustang", "AABBCC");
         when(autosService.getAutoByVin(anyString())).thenReturn(automobile);
-        mockMvc.perform(get("/api/autos/"+automobile.getVin()))
+        mockMvc.perform(get("/api/autos/" + automobile.getVin()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("vin").value(automobile.getVin()));
     }
@@ -145,27 +147,35 @@ public class AutosControllerTests {
                 .andExpect(status().isNoContent());
     }
 
-//PATCH
+    //PATCH
     //PATCH: /api/autos/{vin} returns the patched auto
-@Test
-void updateAuto_withObject_returnsAuto() throws Exception {
-    Automobile automobile = new Automobile(1967, "Ford", "Mustang", "AABBCC");
-    when(autosService.updateAuto(anyString(), anyString(), anyString())).thenReturn(automobile);
-    mockMvc.perform(patch("/api/autos/" + automobile.getVin())
-            .contentType(MediaType.APPLICATION_JSON)
-            .content("{\"color\":\"RED\",\"owner\":\"Hector\"}"))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("color").value("RED"))
-            .andExpect(jsonPath("owner").value("Hector"));
-}
+    @Test
+    void updateAuto_withObject_returnsAuto() throws Exception {
+        Automobile automobile = new Automobile(1967, "Ford", "Mustang", "AABBCC");
+        when(autosService.updateAuto(anyString(), anyString(), anyString())).thenReturn(automobile);
+        mockMvc.perform(patch("/api/autos/" + automobile.getVin())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"color\":\"RED\",\"owner\":\"Hector\"}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("color").value("RED"))
+                .andExpect(jsonPath("owner").value("Hector"));
+    }
 
     //PATCH: /api/autos/{vin} returns no auto found (204)
+    @Test
+    void updateAuto_withObject_none_returnsNoContent() throws Exception {
+        when(autosService.updateAuto(anyString(), anyString(), anyString())).thenReturn(null);
+        mockMvc.perform(patch("/api/autos/AB")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"color\":\"RED\",\"owner\":\"Hector\"}"))
+                .andExpect(status().isNoContent());
+    }
+
     //PATCH: /api/autos/{vin} returns error message (400) due to bad request
 
 // DELETE
     //DELETE: /api/autos/{vin} return delete request successfully (200)
     //DELETE: /api/autos/{vin} return delete no auto found (204)
-
 
 
 }
