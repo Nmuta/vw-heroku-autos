@@ -128,6 +128,15 @@ public class AutosControllerTests {
 
     }
 
+    @Test
+    void getAuto_withVin_returnsAuto() throws Exception {
+        Automobile automobile = new Automobile(1967, "Ford", "Mustang", "AABBCC");
+        when(autosService.getAutoByVin(anyString())).thenReturn(automobile);
+        mockMvc.perform(get("/api/autos/"+automobile.getVin()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("vin").value(automobile.getVin()));
+    }
+
 
 //GET a specific auto
     // GET: /api/autos/{vin} returns the Auto that matches the vin

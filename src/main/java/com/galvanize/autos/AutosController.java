@@ -36,6 +36,12 @@ public class AutosController {
         return autosService.addAuto(auto);
     }
 
+    @GetMapping("/api/autos/{vin}")
+    public Automobile getAutoByVin(@PathVariable String vin) {
+        return autosService.getAutoByVin(vin);
+    }
+
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void invalidAutoExceptionHandler(InvalidAutoException e) {

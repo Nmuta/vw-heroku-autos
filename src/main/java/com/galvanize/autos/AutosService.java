@@ -22,6 +22,9 @@ public class AutosService {
         return null;
     }
 
+    public Automobile getAutoByVin(String anyString) {
+        return null;
+    }
 
 
 }
