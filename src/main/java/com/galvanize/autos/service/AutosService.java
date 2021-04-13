@@ -2,20 +2,31 @@ package com.galvanize.autos.service;
 
 import com.galvanize.autos.model.Automobile;
 import com.galvanize.autos.model.AutosList;
+import com.galvanize.autos.repositories.AutosRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AutosService {
 
+    AutosRepository autosRepository;
+
+    public AutosService(AutosRepository autosRepository) {
+        this.autosRepository = autosRepository;
+    }
+
     public AutosList getAutos() {
-        return null;
+        // Query: select * from autos;
+        // Put that in a list
+        // Return a new AutosList with the list
+        return new AutosList(autosRepository.findAll());
+
     }
 
     public AutosList getAutos(String color, String make) {
         return null;
     }
 
-    public AutosList getAutos(String colorOrMarke) {
+    public AutosList getAutos(String colorOrMake) {
         return null;
     }
 
