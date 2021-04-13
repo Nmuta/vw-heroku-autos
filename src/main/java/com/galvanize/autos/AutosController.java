@@ -1,8 +1,6 @@
 
-package com.galvanize.autos.controller;
-
-import com.galvanize.autos.AutosService;
-import com.galvanize.autos.AutosList;
+package com.galvanize.autos;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,9 +13,11 @@ public class AutosController {
         this.autosService = autosService;
     }
     @GetMapping("/api/autos")
-    public AutosList getAutos() {
+    public ResponseEntity<AutosList> getAutos() {
+        AutosList autosList = autosService.getAutos();
+        return autosList.isEmpty() ? ResponseEntity.noContent().build() :
+                ResponseEntity.ok(autosList);
 
-        return autosService.getAutos();
     }
 
 }

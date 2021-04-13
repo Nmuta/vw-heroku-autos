@@ -1,18 +1,17 @@
 package com.galvanize.autos;
 
-import com.galvanize.autos.controller.AutosController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -37,7 +36,7 @@ public class AutosControllerTests {
         }
         when(autosService.getAutos()).thenReturn(new AutosList(automobiles));
         // Act
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/autos"))
+        mockMvc.perform(get("/api/autos"))
                 .andDo(print())
                 // Assert
                 .andExpect(status().isOk())
@@ -45,7 +44,18 @@ public class AutosControllerTests {
 
     }
 
-    // GET: /api/autos returns no autos in db (204) no content
+    // GET: /api/autos returns no autos in db (204) no contentv
+    @Test
+    void getAutos_noParams_none_returnsNoContent() throws Exception {
+        // Arrange
+        when(autosService.getAutos()).thenReturn(new AutosList());
+        // Act
+        mockMvc.perform(get("/api/autos"))
+                .andDo(print())
+                // Assert
+                .andExpect(status().isNoContent());
+    }
+
     // GET: /api/autos?color=blue returns list of all blue autos in db
     // GET: /api/autos?make=volkswagen returns list of all vw autos in db
     // GET: /api/autos?make=volkswagen?color=blue returns list of all blue vw in db
