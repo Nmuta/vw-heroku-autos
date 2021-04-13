@@ -63,9 +63,15 @@ class AutosServiceTest {
     }
 
     @Test
-    void addAuto() {
-    }
+    void addAuto_valid_returnsAuto() {
+        Automobile automobile = new Automobile(1967, "Ford", "Mustang", "AABBCC");
+        when(autosRepository.save(any(Automobile.class)))
+                .thenReturn(automobile);
+        Automobile auto = autosService.addAuto(automobile);
+        assertThat(auto).isNotNull();
+        assertThat(auto.getMake()).isEqualTo("Ford");
 
+    }
     @Test
     void getAutoByVin() {
     }
