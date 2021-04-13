@@ -1,4 +1,4 @@
-package com.galvanize.autos;
+package com.galvanize.autos.model;
 
 import java.util.Objects;
 

@@ -1,5 +1,11 @@
 
-package com.galvanize.autos;
+package com.galvanize.autos.controller;
+import com.galvanize.autos.model.AutosList;
+import com.galvanize.autos.service.AutosService;
+import com.galvanize.autos.exceptions.InvalidAutoException;
+import com.galvanize.autos.model.UpdateOwnerRequest;
+import com.galvanize.autos.exceptions.AutoNotFoundException;
+import com.galvanize.autos.model.Automobile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

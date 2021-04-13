@@ -1,6 +1,7 @@
-package com.galvanize.autos;
+package com.galvanize.autos.service;
 
-import com.galvanize.autos.AutosList;
+import com.galvanize.autos.model.Automobile;
+import com.galvanize.autos.model.AutosList;
 import org.springframework.stereotype.Service;
 
 @Service

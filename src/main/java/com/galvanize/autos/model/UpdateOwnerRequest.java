@@ -1,4 +1,4 @@
-package com.galvanize.autos;
+package com.galvanize.autos.model;
 
 public class UpdateOwnerRequest {
     private String color;

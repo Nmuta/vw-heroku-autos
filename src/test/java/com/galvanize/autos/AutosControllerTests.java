@@ -1,6 +1,12 @@
 package com.galvanize.autos;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.galvanize.autos.controller.AutosController;
+import com.galvanize.autos.exceptions.AutoNotFoundException;
+import com.galvanize.autos.exceptions.InvalidAutoException;
+import com.galvanize.autos.model.Automobile;
+import com.galvanize.autos.model.AutosList;
+import com.galvanize.autos.service.AutosService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
