@@ -5,6 +5,8 @@ import com.galvanize.autos.model.AutosList;
 import com.galvanize.autos.repositories.AutosRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AutosService {
 
@@ -23,7 +25,9 @@ public class AutosService {
     }
 
     public AutosList getAutos(String color, String make) {
-        return null;
+        List<Automobile> automobiles = autosRepository.findByColorContainsAndMakeContains(color, make);
+        return  !automobiles.isEmpty() ? new AutosList(automobiles) : null;
+
     }
 
     public AutosList getAutos(String colorOrMake) {

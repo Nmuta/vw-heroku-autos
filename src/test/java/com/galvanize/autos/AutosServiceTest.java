@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,7 +39,15 @@ class AutosServiceTest {
     }
 
     @Test
-    void testGetAutos() {
+    void getAutos_search_returnsList() {
+        Automobile automobile = new Automobile(1967, "Ford", "Mustang", "AABBCC");
+        automobile.setColor("RED");
+        when(autosRepository.findByColorContainsAndMakeContains(anyString(), anyString()))
+                .thenReturn(Arrays.asList(automobile));
+        AutosList autosList = autosService.getAutos("RED", "Ford");
+        assertThat(autosList).isNotNull();
+        assertThat(autosList.isEmpty()).isFalse();
+
     }
 
     @Test
