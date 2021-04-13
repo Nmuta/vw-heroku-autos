@@ -172,6 +172,17 @@ public class AutosControllerTests {
     }
 
     //PATCH: /api/autos/{vin} returns error message (400) due to bad request
+    @Test
+    void updateAuto_badRequest_returns400() throws Exception {
+        Automobile automobile = new Automobile(1967, "Ford", "Mustang", "AABBCC");
+        when(autosService.updateAuto(any(), any(), any())).thenThrow(InvalidAutoException.class);
+        String json = "{\"vin\":\"AABBCC\",\"color\":RED,\"owner\":Hector}";
+        mockMvc.perform(patch("/api/autos/" + automobile.getVin()).contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
 
 // DELETE
     //DELETE: /api/autos/{vin} return delete request successfully (200)
