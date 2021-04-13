@@ -39,8 +39,9 @@ public class AutosService {
         return autosRepository.save(auto);
     }
 
-    public Automobile getAutoByVin(String anyString) {
-        return null;
+    public Automobile getAutoByVin(String vin) {
+        return autosRepository.findByVin(vin).orElse(null);
+
     }
 
     public Automobile updateAuto(String vin, String color, String owner) {
