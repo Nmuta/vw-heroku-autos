@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -57,6 +58,20 @@ public class AutosControllerTests {
     }
 
     // GET: /api/autos?color=blue returns list of all blue autos in db
+
+    @Test
+    void getAutos_searchParams_exists_returnsAutosList() throws Exception {
+        List<Automobile> automobiles = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            automobiles.add(new Automobile(1967+i, "Ford", "Mustang", "AABB" + i));
+        }
+        when(autosService.getAutos(anyString(), anyString())).thenReturn(new AutosList(automobiles));
+        mockMvc.perform(get("/api/autos?color=RED&make=Ford"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.automobiles", hasSize(5)));
+
+    }
+
     // GET: /api/autos?make=volkswagen returns list of all vw autos in db
     // GET: /api/autos?make=volkswagen?color=blue returns list of all blue vw in db
 
