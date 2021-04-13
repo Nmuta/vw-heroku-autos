@@ -101,6 +101,8 @@ public class AutosControllerTests {
                 .andExpect(jsonPath("$.automobiles", hasSize(5)));
     }
 
+    // POST
+    // POST: /api/autos returns a new created auto
     @Test
     void addAuto_valid_returnsAuto() throws Exception {
         Automobile automobile = new Automobile(1967, "Ford", "Mustang", "AABBCC");
@@ -114,11 +116,18 @@ public class AutosControllerTests {
 
     }
 
-
-
-// POST
-    // POST: /api/autos returns a new created auto
     // POST: /api/autos returns error due to a bad request (400)
+    @Test
+    void addAuto_badRequest_returns400() throws Exception {
+        when(autosService.addAuto(any(Automobile.class))).thenThrow(InvalidAutoException.class);
+        String json = "{\"year\":1967,\"make\":\"Ford\",\"model\":\"Mustang\",\"color\":null,\"owner\":null,\"vin\":\"AABBCC\"}";
+        mockMvc.perform(post("/api/autos").contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+
+    }
+
 
 //GET a specific auto
     // GET: /api/autos/{vin} returns the Auto that matches the vin
