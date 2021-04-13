@@ -30,6 +30,7 @@ public class AutosService {
         return null;
     }
 
+    public void deleteAuto(String vin) {
 
-
+    }
 }

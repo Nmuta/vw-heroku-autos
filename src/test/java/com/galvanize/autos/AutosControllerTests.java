@@ -14,6 +14,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -183,9 +184,16 @@ public class AutosControllerTests {
                 .andExpect(status().isBadRequest());
     }
 
-
-// DELETE
+    // DELETE
     //DELETE: /api/autos/{vin} return delete request successfully (200)
+    @Test
+    void deleteAuto_withVin_exists_returns202() throws Exception {
+        mockMvc.perform(delete("/api/autos/AABBCC"))
+                .andExpect(status().isAccepted());
+
+        verify(autosService).deleteAuto(anyString());
+    }
+
     //DELETE: /api/autos/{vin} return delete no auto found (204)
 
 
