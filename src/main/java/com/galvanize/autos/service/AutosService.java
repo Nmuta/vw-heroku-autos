@@ -1,5 +1,6 @@
 package com.galvanize.autos.service;
 
+import com.galvanize.autos.exceptions.AutoNotFoundException;
 import com.galvanize.autos.model.Automobile;
 import com.galvanize.autos.model.AutosList;
 import com.galvanize.autos.repositories.AutosRepository;
@@ -56,6 +57,12 @@ public class AutosService {
     }
 
     public void deleteAuto(String vin) {
+        Optional<Automobile> oAuto = autosRepository.findByVin(vin);
+        if (oAuto.isPresent()) {
+            autosRepository.delete(oAuto.get());
+        } else {
+            throw new AutoNotFoundException();
+        }
 
     }
 }
