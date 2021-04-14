@@ -3,6 +3,7 @@ image: openjdk:11
 stages:
   - build
   - test
+  - deploy
 build:
   stage: build
   script:
@@ -17,3 +18,13 @@ test:
   artifacts:
     paths:
       - build/test-results/test/TEST*.xml
+production:
+  stage: deploy
+  image: ruby:latest
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=vw-autos-api-v2 --api-key=$HEROKU_API_KEY
+  only: # Heroku will ONLY deploy from main or master branch!
+    - master
