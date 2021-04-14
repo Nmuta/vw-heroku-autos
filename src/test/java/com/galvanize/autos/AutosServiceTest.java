@@ -57,10 +57,9 @@ class AutosServiceTest {
     @Test
     void getAutos_oneParam_returnsList() {
         Automobile automobile = new Automobile(1967, "Ford", "Mustang", "AABBCC");
-        automobile.setColor("RED");
-        when(autosRepository.findByColorOrMakeContains(anyString(), isNull()))
+        when(autosRepository.findByColorOrMakeContains(isNull(), anyString()))
                 .thenReturn(Arrays.asList(automobile));
-        AutosList autosList = autosService.getAutosByColorOrMake("RED", null);
+        AutosList autosList = autosService.getAutosByColorOrMake(automobile.getColor(), automobile.getMake());
         assertThat(autosList).isNotNull();
         assertThat(autosList.isEmpty()).isFalse();
 
