@@ -14,7 +14,6 @@ public class Automobile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @Column(name = "model_year")
     private int year;
