@@ -27,9 +27,7 @@ public class Automobile {
     @Column(unique = true)
     private String vin;
 
-    public Automobile() {
-
-    }
+    public Automobile() { }
 
     public Automobile(int year, String make, String model, String vin) {
         this.year = year;

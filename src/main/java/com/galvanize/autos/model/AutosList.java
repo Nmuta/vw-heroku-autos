@@ -50,3 +50,4 @@ public class AutosList {
         return Objects.hash(automobiles);
     }
 }
+
